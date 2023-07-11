@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import argparse
 
-
 def draw_mask(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:
         param['drawing'] = True
@@ -10,11 +9,12 @@ def draw_mask(event, x, y, flags, param):
 
     elif event == cv2.EVENT_MOUSEMOVE:
         if param['drawing'] == True:
-            cv2.rectangle(param['img'], (param['ix'], param['iy']), (x, y), (0, 0, 0), -1)
+            cv2.line(param['img'], (param['ix'], param['iy']), (x, y), (255, 255, 255), 50)
+            param['ix'], param['iy'] = x, y
 
     elif event == cv2.EVENT_LBUTTONUP:
         param['drawing'] = False
-        cv2.rectangle(param['img'], (param['ix'], param['iy']), (x, y), (0, 0, 0), -1)
+        cv2.line(param['img'], (param['ix'], param['iy']), (x, y), (255, 255, 255), 50)
 
 
 def draw_mask_on_image(image_path):
@@ -29,7 +29,8 @@ def draw_mask_on_image(image_path):
         cv2.imshow('image', img_show)
         k = cv2.waitKey(1) & 0xFF
         if k == ord('s'):  # press 's' to save and exit
-            cv2.imwrite('mask.png', mask)
+            mask_inv = cv2.bitwise_not(mask)
+            cv2.imwrite('mask.png', mask_inv)
             cv2.destroyAllWindows()
             break
         elif k == 27:  # press 'ESC' to exit without saving
