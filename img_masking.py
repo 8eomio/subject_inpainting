@@ -10,11 +10,11 @@ def draw_mask(event, x, y, flags, param):
 
     elif event == cv2.EVENT_MOUSEMOVE:
         if param['drawing'] == True:
-            cv2.rectangle(param['img'], (param['ix'], param['iy']), (x, y), (255, 255, 255), -1)
+            cv2.rectangle(param['img'], (param['ix'], param['iy']), (x, y), (0, 0, 0), -1)
 
     elif event == cv2.EVENT_LBUTTONUP:
         param['drawing'] = False
-        cv2.rectangle(param['img'], (param['ix'], param['iy']), (x, y), (255, 255, 255), -1)
+        cv2.rectangle(param['img'], (param['ix'], param['iy']), (x, y), (0, 0, 0), -1)
 
 
 def draw_mask_on_image(image_path):
